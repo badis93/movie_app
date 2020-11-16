@@ -1,25 +1,44 @@
-import logo from './logo.svg';
-import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+import React from 'react';
+import {moviesData} from './MovieCard';
+import MovieList from './MovieList';
+
+import { useState } from 'react';
+
+function App () {
+
+ 
+   const [movies, setMovies] = useState(moviesData);
+  const removeMovieById = id =>{
+     const updateMovies = movies.filter(function(movie){
+       return movie.id !== id
+     })
+   
+     setMovies(updateMovies);
+ 
+   };
+ 
+     return (
+       <div className="container">
+        
+             <div className="row">
+               {movies.map(movie => {
+                 console.log(movies);
+                 return(
+                   <div className="col-4" key={movie.id}>
+                     <MovieList 
+                       item={movie} 
+                      removeMovieById={removeMovieById}
+                     />
+                   </div>
+                 );
+               })}
+             </div>
+           </div>
+      
+     );
+   }
+
+
 
 export default App;
