@@ -1,15 +1,32 @@
 
 import React from 'react';
-import {moviesData} from './MovieCard';
+import {MoviesData} from './MoviesData';
 import MovieList from './MovieList';
+import Filter from './Filter';
 
 import { useState } from 'react';
 
 function App () {
 
  
-   const [movies, setMovies] = useState(moviesData);
-  const removeMovieById = id =>{
+ const [movies,setMovies] = useState(MoviesData);
+ const [keyword,setKeyword] = useState("");
+ const [newrate,setNewrate] = useState(0);
+
+ const search = (text) => {
+  setKeyword(text);
+ }
+
+ const setrate = (rate) => {
+  setNewrate(rate);
+ }
+
+ const addMovie = (movie) => {
+  setMovies(movies.concat(movie));
+ }
+
+
+ /* const removeMovieById = id =>{
      const updateMovies = movies.filter(function(movie){
        return movie.id !== id
      })
@@ -17,25 +34,20 @@ function App () {
      setMovies(updateMovies);
  
    };
- 
+ */
+
+ console.log(MoviesData);
      return (
        <div className="container">
-        
-             <div className="row">
-               {movies.map(movie => {
-                 console.log(movies);
-                 return(
-                   <div className="col-4" key={movie.id}>
+              <Filter search={search} setrate={setrate} newrate={newrate} />
                      <MovieList 
-                       item={movie} 
-                      removeMovieById={removeMovieById}
+                     addMovie={addMovie}
+                     movies={movies.filter(movie => 
+                      movie.Rate >= newrate  &&
+                      movie.title.toLowerCase().includes(keyword.toLowerCase().trim()))}
                      />
                    </div>
-                 );
-               })}
-             </div>
-           </div>
-      
+                      
      );
    }
 

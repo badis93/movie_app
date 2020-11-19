@@ -1,18 +1,29 @@
 import React from 'react';
+import StarRatingComponent from 'react-star-rating-component';
 
 
+function Filter({search,newrate,setrate}) {
 
-function Filter(props) {
+
+ const  onStarClick = (nextValue, prevValue, name) => {
+  setrate(nextValue);
+  }
+ 
 
     return (
+
         <div>
             <input
                     type="text"
-                    placeholder="name"
-                    id="name"
-                    onChange={props.movies.filter(
-                      ))}
+                    placeholder="Searching"
+                    onChange={(e) => {search(e.target.value)}}
                 />
+         <StarRatingComponent 
+          name="rate1" 
+          starCount={5}
+          value={newrate}
+          onStarClick={onStarClick}
+        />
           
         </div>
       );
